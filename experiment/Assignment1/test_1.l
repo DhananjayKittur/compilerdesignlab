@@ -1,0 +1,96 @@
+/* A simple scanner for a toy Pascal-like language. */
+%option noyywrap
+%{
+#include <stdio.h> 
+#include <string.h>
+int num_lines = 0;
+char token_store[200][20];
+int token_num = 0;
+int typeIdentified = 0;
+void add_identifier(char* abc);
+int check_for_identifier(char* text);
+%}
+%x C_COMMENT
+    
+DIGIT    [0-9]
+ID       [a-zA-Z_][A-Za-z0-9_]*
+KEYWORD	 break|case|const|continue|default|do|double|else|enum|extern|for|goto|if|sizeof|static|struct|switch|typedef|union|unsigned|while|class|dot|sqrt|hit|inverse|perpendicular|dominantAxis|trace|hit|luminance|rand|pow|min|max|illuminance|ambient
+/*Is inside Keyword ?? But is used as identifier in dieletric_material.rtsl*/
+
+EXP	????
+TYPE int|float|bool|vec2|vec3|vec4|ivec2|ivec3|ivec4|bvec2|bvec3|bvec4|rt_Primitive|rt_Camera|rt_Material|rt_Texture|rt_Light|void
+QUALIFIER attribute|uniform|varying|const|public|private|scratch|void|color
+
+IDENTIFIER constructor|generateRay|intersect|computeBounds|computeNormal|computeTextureCoordinates|computeDerivatives|generateSample|samplePDF|lookup|shade|BSDF|sampleBSDF|evaluatePDF|emission|illumination|Sphere|SchlickDielectric|normalize|reflect|PinholeCamera|cross
+/*Is normalize and reflect and cross Identifier or keyword? I feel they are identifier but be sure. */
+
+
+STATE RayOrigin|RayDirection|InverseRayDirectionEpsilon|HitDistance|ScreenCoord|LensCoord|du|dv|TimeSeedvec3|InverseRayDirection|Epsilon|BoundMin|BoundMax|GeometricNormal|ShadingNormal|TextureUV|TextureUVW|dsdu|dsdv|PDF|TimeSeed|TextureColor|FloatTextureValue|dtdu|dtdv|dPdu|dPdv|HitPoint|LightDirection|LightDistance|LightColor|EmissionColor|BSDFSeed|PDF|SampleColor|BSDFValue
+
+%%
+"+" { printf( "PLUS\n" ); }
+"-" { printf( "MINUS\n" ); }
+"*"	{ printf( "MUL\n" ); }
+"/"	{ printf( "DIV\n" ); }
+"<" { printf( "LT\n" ); }
+">"	{ printf( "GT\n" ); }
+"<="	{ printf( "LTE\n" ); }
+"<>"	{ printf( "<>????\n" ); }
+","	{ printf( "COMMA\n" ); }
+":"	{ printf( "COLON\n" ); }
+";"	{ typeIdentified = 0; printf( "SEMICOLON\n" ); }
+"="	{ printf( "ASSIGN\n" ); }
+">="	{ printf( "GTE\n" ); }
+"("	{ printf( "LPARENTHESIS\n" ); }
+")"	{ printf( "RPARENTHESIS\n" ); }
+"{"	{ printf( "LBRACE\n" ); }
+"}"	{ printf( "RBRACE\n" ); }
+
+{DIGIT}+	{ printf( "INT %s\n", yytext ); }
+     
+{DIGIT}+"."{DIGIT}*	{ printf( "FLOAT %s\n", yytext); }
+     
+{KEYWORD} { printf( "KEYWORD %s\n", yytext ); }
+{TYPE} { 	 typeIdentified = 1;	 printf( "TYPE %s\n", yytext ); }
+{QUALIFIER} { printf( "QUALIFIER %s\n", yytext ); }
+{IDENTIFIER} { printf( "IDENTIFIER %s\n", yytext ); }
+rt_{STATE} { printf( "STATE %s\n", yytext ); }     
+
+\n	++num_lines;
+[ \t]+	/* eat up whitespace */
+    
+<INITIAL>{
+     "/*"              BEGIN(C_COMMENT);
+     }
+     <C_COMMENT>{
+     "*/"      BEGIN(INITIAL);
+     [^*\n]+   // eat comment in chunks
+     "*"       // eat the lone star
+     \n        yylineno++; num_lines++;
+     }
+"//".*\n  num_lines++;
+{ID} { 	if( typeIdentified ) {	add_identifier(yytext);	typeIdentified = 0;printf( "IDENTIFIER %s\n", yytext );}else {	int retVal =check_for_identifier(yytext);	if( !retVal )	printf("Error(%d): Unrecognized symbol %s\n", num_lines+1, yytext ); else printf( "IDENTIFIER %s\n", yytext );	}}
+\r	//Recognizing carriage return I don't know why ???
+.	{printf("Error(%d): Unrecognized symbol %s\n", num_lines+1, yytext ); }
+%%
+
+void add_identifier( char* text ) {
+	strncpy((char*) &token_store[token_num++], text, 20 );
+}
+
+int check_for_identifier( char *text) {
+	int i=0;
+	
+	for( ; i<token_num; i++ ) {
+		if( !strncmp((char*)&token_store[i], text,20 ) )		
+			return 1;
+	}
+	return 0;
+}
+     
+int main()
+{
+  yylex();
+  return 0;
+}
+
