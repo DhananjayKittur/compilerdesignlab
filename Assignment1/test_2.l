@@ -54,9 +54,9 @@ STATE RayOrigin|RayDirection|InverseRayDirectionEpsilon|HitDistance|ScreenCoord|
 {KEYWORD} { printf( "KEYWORD %s\n", yytext ); }
 {TYPE} { printf( "TYPE %s\n", yytext ); }
 {QUALIFIER} { printf( "QUALIFIER %s\n", yytext ); }
-{IDENTIFIER} { printf( "IDENTIFIER %s\n", yytext ); }
-"."{ID} {printf("SWIZZLE %s\n", (char*)&yytext[1]);}
 rt_{STATE} { printf( "STATE %s\n", yytext ); }     
+{ID} { printf("IDENTIFIER %s\n", yytext ); }
+"."{ID} {printf("SWIZZLE %s\n", (char*)&yytext[1]);}
      
 \n	++num_lines;
 [ \t]+	/* eat up whitespace */
@@ -69,7 +69,6 @@ rt_{STATE} { printf( "STATE %s\n", yytext ); }
      "*"       // eat the lone star
      \n        yylineno++; num_lines++;
      }
-{ID} { printf("Error(%d): Unrecognized symbol %s\n", num_lines+1, yytext ); }
 "//".*\n  num_lines++;
 \r	//Recognizing carriage return I don't know why ???
 .	{printf("Error(%d): Unrecognized symbol %s\n", num_lines+1, yytext ); }

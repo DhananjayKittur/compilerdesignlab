@@ -12,9 +12,9 @@ TYPE float
 IDENTIFIER radius
 SEMICOLON
 TYPE vec2
-Error(7): Unrecognized symbol pos
+IDENTIFIER pos
 SEMICOLON
-Error(8): Unrecognized symbol pos
+IDENTIFIER pos
 SWIZZLE x
 ASSIGN
 INT 0

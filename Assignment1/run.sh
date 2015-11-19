@@ -1,3 +1,3 @@
-flex -o test_1.c test_1.l
-gcc test_1.c -o test_1.out
-./test_1.out < sphere.rtsl> output1
+flex -o test_2.c test_2.l
+gcc test_2.c -o test_2.out
+./test_2.out < sphere.rtsl> output2
