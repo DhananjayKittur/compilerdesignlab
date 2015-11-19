@@ -25,20 +25,26 @@ STATE RayOrigin|RayDirection|InverseRayDirectionEpsilon|HitDistance|ScreenCoord|
 "-" { printf( "MINUS\n" ); }
 "*"	{ printf( "MUL\n" ); }
 "/"	{ printf( "DIV\n" ); }
+"="	{ printf( "ASSIGN\n" ); }
+"=="	{ printf( "EQUAL\n" ); }
+"!="	{ printf( "NOT_EQUAL\n" ); }
 "<" { printf( "LT\n" ); }
 ">"	{ printf( "GT\n" ); }
-"<="	{ printf( "LTE\n" ); }
-"<>"	{ printf( "<>????\n" ); }
+">="	{ printf( "GE\n" ); }
+"<="	{ printf( "LE\n" ); 
 ","	{ printf( "COMMA\n" ); }
-"."	{ printf( ".???\n" ); }
+"&&"	{ printf( "AND\n" ); }
+"||"	{ printf( "OR\n" ); }
+"++"	{ printf( "INC\n" ); }
+"--"	{ printf( "DEC\n" ); }
 ":"	{ printf( "COLON\n" ); }
 ";"	{ printf( "SEMICOLON\n" ); }
-"="	{ printf( "ASSIGN\n" ); }
-">="	{ printf( "GTE\n" ); }
 "("	{ printf( "LPARENTHESIS\n" ); }
 ")"	{ printf( "RPARENTHESIS\n" ); }
 "{"	{ printf( "LBRACE\n" ); }
 "}"	{ printf( "RBRACE\n" ); }
+"["	{ printf( "LBRACKET\n" ); }
+"]"	{ printf( "RBRACKET\n" ); }
 
 {DIGIT}+	{ printf( "INT %s\n", yytext ); }
      
