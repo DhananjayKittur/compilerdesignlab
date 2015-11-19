@@ -1,4 +1,10 @@
-/* A simple scanner for a toy Pascal-like language. */
+/******************************** Lab Assignment 1*******************************************
+    *************Members: Niroj Pokhrel, Logesh, Dhananjay Kittur ***************************
+    **************Git Repo: https://bitbucket.org/nirojpokhrel/compilerdesignlab **************/
+/******************************** Confusion: *******************************************            
+ ** 1. What is inside ? Used in file as identifier but is mentioned as KEYWORD in the pdf. Are we suppose to give error here ?***
+ ** 2. What if some random string is encountered abcdef ? Should we identify it as an INDENTIFIER or report an error for undefined string ?*
+ ** 3. Should we use c type naming conventions with underscore ? **/
 %option noyywrap
 %{
 #include <stdio.h> 

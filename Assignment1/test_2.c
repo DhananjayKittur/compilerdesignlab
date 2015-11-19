@@ -779,14 +779,20 @@ int yy_flex_debug = 0;
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
 #line 1 "test_2.l"
-/* A simple scanner for a toy Pascal-like language. */
-#line 4 "test_2.l"
+/******************************** Lab Assignment 1*******************************************
+    *************Members: Niroj Pokhrel, Logesh, Dhananjay Kittur ***************************
+    **************Git Repo: https://bitbucket.org/nirojpokhrel/compilerdesignlab **************/
+/******************************** Confusion: *******************************************            
+ ** 1. What is inside ? Used in file as identifier but is mentioned as KEYWORD in the pdf. Are we suppose to give error here ?***
+ ** 2. What if some random string is encountered abcdef ? Should we identify it as an INDENTIFIER or report an error for undefined string ?*
+ ** 3. Should we use c type naming conventions with underscore ? **/
+#line 10 "test_2.l"
 #include <stdio.h> 
 int num_lines = 0;
 
 /*Is inside Keyword ?? But is used as identifier in dieletric_material.rtsl*/
 /*Is normalize and reflect and cross Identifier or keyword? I feel they are identifier but be sure. */
-#line 790 "test_2.c"
+#line 796 "test_2.c"
 
 #define INITIAL 0
 #define C_COMMENT 1
@@ -974,9 +980,9 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 23 "test_2.l"
+#line 29 "test_2.l"
 
-#line 980 "test_2.c"
+#line 986 "test_2.c"
 
 	if ( !(yy_init) )
 		{
@@ -1061,232 +1067,232 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 24 "test_2.l"
+#line 30 "test_2.l"
 { printf( "PLUS\n" ); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 25 "test_2.l"
+#line 31 "test_2.l"
 { printf( "MINUS\n" ); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 26 "test_2.l"
+#line 32 "test_2.l"
 { printf( "MUL\n" ); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 27 "test_2.l"
+#line 33 "test_2.l"
 { printf( "DIV\n" ); }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 28 "test_2.l"
+#line 34 "test_2.l"
 { printf( "ASSIGN\n" ); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 29 "test_2.l"
+#line 35 "test_2.l"
 { printf( "EQUAL\n" ); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 30 "test_2.l"
+#line 36 "test_2.l"
 { printf( "NOT_EQUAL\n" ); }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 31 "test_2.l"
+#line 37 "test_2.l"
 { printf( "LT\n" ); }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 32 "test_2.l"
+#line 38 "test_2.l"
 { printf( "GT\n" ); }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 33 "test_2.l"
+#line 39 "test_2.l"
 { printf( "GE\n" ); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 34 "test_2.l"
+#line 40 "test_2.l"
 { printf( "LE\n" ); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 35 "test_2.l"
+#line 41 "test_2.l"
 { printf( "COMMA\n" ); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 36 "test_2.l"
+#line 42 "test_2.l"
 { printf( "AND\n" ); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 37 "test_2.l"
+#line 43 "test_2.l"
 { printf( "OR\n" ); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 38 "test_2.l"
+#line 44 "test_2.l"
 { printf( "INC\n" ); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 39 "test_2.l"
+#line 45 "test_2.l"
 { printf( "DEC\n" ); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 40 "test_2.l"
+#line 46 "test_2.l"
 { printf( "COLON\n" ); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 41 "test_2.l"
+#line 47 "test_2.l"
 { printf( "SEMICOLON\n" ); }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 42 "test_2.l"
+#line 48 "test_2.l"
 { printf( "LPARENTHESIS\n" ); }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 43 "test_2.l"
+#line 49 "test_2.l"
 { printf( "RPARENTHESIS\n" ); }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 44 "test_2.l"
+#line 50 "test_2.l"
 { printf( "LBRACE\n" ); }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 45 "test_2.l"
+#line 51 "test_2.l"
 { printf( "RBRACE\n" ); }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 46 "test_2.l"
+#line 52 "test_2.l"
 { printf( "LBRACKET\n" ); }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 47 "test_2.l"
+#line 53 "test_2.l"
 { printf( "RBRACKET\n" ); }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 49 "test_2.l"
+#line 55 "test_2.l"
 { printf( "INT %s\n", yytext ); }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 51 "test_2.l"
+#line 57 "test_2.l"
 { printf( "FLOAT %s\n", yytext); }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 52 "test_2.l"
+#line 58 "test_2.l"
 printf("EXP %s\n", yytext);
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 54 "test_2.l"
+#line 60 "test_2.l"
 { printf( "KEYWORD %s\n", yytext ); }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 55 "test_2.l"
+#line 61 "test_2.l"
 { printf( "TYPE %s\n", yytext ); }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 56 "test_2.l"
+#line 62 "test_2.l"
 { printf( "QUALIFIER %s\n", yytext ); }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 57 "test_2.l"
+#line 63 "test_2.l"
 { printf( "STATE %s\n", yytext ); }     
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 58 "test_2.l"
+#line 64 "test_2.l"
 { printf("IDENTIFIER %s\n", yytext ); }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 59 "test_2.l"
+#line 65 "test_2.l"
 {printf("SWIZZLE %s\n", (char*)&yytext[1]);}
 	YY_BREAK
 case 34:
 /* rule 34 can match eol */
 YY_RULE_SETUP
-#line 61 "test_2.l"
+#line 67 "test_2.l"
 ++num_lines;
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 62 "test_2.l"
+#line 68 "test_2.l"
 /* eat up whitespace */
 	YY_BREAK
 
 case 36:
 YY_RULE_SETUP
-#line 64 "test_2.l"
+#line 70 "test_2.l"
 BEGIN(C_COMMENT);
 	YY_BREAK
 
 
 case 37:
 YY_RULE_SETUP
-#line 67 "test_2.l"
+#line 73 "test_2.l"
 BEGIN(INITIAL);
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 68 "test_2.l"
+#line 74 "test_2.l"
 // eat comment in chunks
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 69 "test_2.l"
+#line 75 "test_2.l"
 // eat the lone star
 	YY_BREAK
 case 40:
 /* rule 40 can match eol */
 YY_RULE_SETUP
-#line 70 "test_2.l"
+#line 76 "test_2.l"
 yylineno++; num_lines++;
 	YY_BREAK
 
 case 41:
 /* rule 41 can match eol */
 YY_RULE_SETUP
-#line 72 "test_2.l"
+#line 78 "test_2.l"
 num_lines++;
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 73 "test_2.l"
+#line 79 "test_2.l"
 //Recognizing carriage return I don't know why ???
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 74 "test_2.l"
+#line 80 "test_2.l"
 {printf("Error(%d): Unrecognized symbol %s\n", num_lines+1, yytext ); }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 76 "test_2.l"
+#line 82 "test_2.l"
 ECHO;
 	YY_BREAK
-#line 1290 "test_2.c"
+#line 1296 "test_2.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(C_COMMENT):
 	yyterminate();
@@ -2285,7 +2291,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 76 "test_2.l"
+#line 82 "test_2.l"
 
 
      
