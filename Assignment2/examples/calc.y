@@ -42,3 +42,5 @@ yyerror(char *s)
 {
   fprintf(stderr, "error: %s\n", s);
 }
+
+int yywrap(void) { }
