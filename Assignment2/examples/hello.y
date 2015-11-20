@@ -1,4 +1,5 @@
-/* Example 1, Hello-World Parser */
+/* Example 1, Hello-World Parser 
+*/
 %{
 #include <stdio.h>
 #include <stdlib.h>

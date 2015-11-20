@@ -1,4 +1,5 @@
-/* Example 2, Calculator Lexer */
+/* Example 2, Calculator Lexer 
+*/
 %{
 #include "calc.yy.h"
 %}
