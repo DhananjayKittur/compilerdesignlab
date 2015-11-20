@@ -1,5 +1,5 @@
 /******************************** Lab Assignment 1*******************************************
-    *************Members: Niroj Pokhrel, Logesh, Dhananjay Kittur ***************************
+    ****************** Members: Niroj Pokhrel (376630), Logesh Soma Sundaram, Dhananjay Kittur(376629) ***************************
     **************Git Repo: https://bitbucket.org/nirojpokhrel/compilerdesignlab **************/
 
 %option noyywrap
@@ -68,7 +68,7 @@ rt_{STATE} { printf( "STATE %s\n", yytext ); }
      \n        num_lines++;
      }
 "//".*\n  num_lines++;
-\r	//Recognizing carriage return I don't know why ???
+\r	
 .	{printf("Error(%d): Unrecognized symbol %s\n", num_lines+1, yytext ); }
 
 %%

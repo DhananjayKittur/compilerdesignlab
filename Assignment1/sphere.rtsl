@@ -1,11 +1,10 @@
 /* 
   A primitive shader implementing a sphere object.
 */
+
 class Sphere : rt_Primitive;
 public vec3 center;
 public float radius;
-vec2 pos;
-pos.x = 0;
 
 void constructor(vec3 newcenter,float newradius) {
   center = newcenter;
