@@ -778,11 +778,11 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 1 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 /******************************** Lab Assignment 1*******************************************
-    ****************** Members: Niroj Pokhrel (376630), Logesh Soma Sundaram, Dhananjay Kittur(376629) ***************************
+  **Members: Niroj Pokhrel (376630), Logesh Soma Sundaram(376635), , Dhananjaya Kumara Kittur Gonibasappa(376629)**************
     **************Git Repo: https://bitbucket.org/nirojpokhrel/compilerdesignlab **************/
-#line 7 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 7 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 #include <stdio.h> 
 int num_lines = 0;
 
@@ -975,7 +975,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 22 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 22 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 
 #line 981 "Output.c"
 
@@ -1062,224 +1062,224 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 23 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 23 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "PLUS\n" ); }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 24 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 24 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "MINUS\n" ); }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 25 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 25 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "MUL\n" ); }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 26 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 26 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "DIV\n" ); }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 27 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 27 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "ASSIGN\n" ); }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 28 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 28 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "EQUAL\n" ); }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 29 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 29 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "NOT_EQUAL\n" ); }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 30 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 30 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "LT\n" ); }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 31 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 31 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "GT\n" ); }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 32 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 32 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "GE\n" ); }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 33 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 33 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "LE\n" ); }
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 34 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 34 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "COMMA\n" ); }
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 35 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 35 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "AND\n" ); }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 36 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 36 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "OR\n" ); }
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 37 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 37 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "INC\n" ); }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 38 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 38 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "DEC\n" ); }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 39 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 39 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "COLON\n" ); }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 40 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 40 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "SEMICOLON\n" ); }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 41 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 41 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "LPARENTHESIS\n" ); }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 42 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 42 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "RPARENTHESIS\n" ); }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 43 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 43 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "LBRACE\n" ); }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 44 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 44 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "RBRACE\n" ); }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 45 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 45 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "LBRACKET\n" ); }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 46 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 46 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "RBRACKET\n" ); }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 48 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 48 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "INT %s\n", yytext ); }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 50 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 50 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "FLOAT %s\n", yytext); }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 51 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 51 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 printf("EXP %s\n", yytext);
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 53 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 53 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "KEYWORD %s\n", yytext ); }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 54 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 54 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "TYPE %s\n", yytext ); }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 55 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 55 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "QUALIFIER %s\n", yytext ); }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 56 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 56 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf( "STATE %s\n", yytext ); }     
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 57 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 57 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 { printf("IDENTIFIER %s\n", yytext ); }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 58 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 58 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 {printf("SWIZZLE %s\n", (char*)&yytext[1]);}
 	YY_BREAK
 case 34:
 /* rule 34 can match eol */
 YY_RULE_SETUP
-#line 60 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 60 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 ++num_lines;
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 61 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 61 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 /* eat up whitespace */
 	YY_BREAK
 
 case 36:
 YY_RULE_SETUP
-#line 63 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 63 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 BEGIN(C_COMMENT);
 	YY_BREAK
 
 
 case 37:
 YY_RULE_SETUP
-#line 66 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 66 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 BEGIN(INITIAL);
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 67 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 67 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 
 	YY_BREAK
 case 39:
 /* rule 39 can match eol */
 YY_RULE_SETUP
-#line 68 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 68 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 num_lines++;
 	YY_BREAK
 
 case 40:
 /* rule 40 can match eol */
 YY_RULE_SETUP
-#line 70 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 70 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 num_lines++;
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 71 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 71 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 72 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 72 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 {printf("Error(%d): Unrecognized symbol %s\n", num_lines+1, yytext ); }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 74 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 74 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 ECHO;
 	YY_BREAK
 #line 1286 "Output.c"
@@ -2281,7 +2281,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 74 "Assignment1_Pokhrel_Kittur_SomaSundaram.l"
+#line 74 "Assignment1_Pokhrel_KitturGonibasappa_SomaSundaram.l"
 
 
      

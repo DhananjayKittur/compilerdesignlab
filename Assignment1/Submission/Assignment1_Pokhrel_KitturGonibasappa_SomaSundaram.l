@@ -1,5 +1,5 @@
 /******************************** Lab Assignment 1*******************************************
-    ****************** Members: Niroj Pokhrel (376630), Logesh Soma Sundaram, Dhananjay Kittur(376629) ***************************
+  **Members: Niroj Pokhrel (376630), Logesh Soma Sundaram(376635), , Dhananjaya Kumara Kittur Gonibasappa(376629)**************
     **************Git Repo: https://bitbucket.org/nirojpokhrel/compilerdesignlab **************/
 
 %option noyywrap
