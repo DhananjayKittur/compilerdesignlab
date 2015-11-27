@@ -1,7 +1,6 @@
 /******************************** Lab Assignment 2*******************************************
     *************Members: Niroj Pokhrel, Logesh, Dhananjay Kittur ***************************
     ****************************/
-
 %option noyywrap
 %{
 #include "student.yy.h" 
@@ -12,10 +11,10 @@ int num_lines = 0;
 DIGIT    [0-9]
 ID       [a-zA-Z_][A-Za-z0-9_]*
 KEYWORD	 break|case|const|continue|default|do|double|else|enum|extern|for|goto|if|sizeof|static|struct|switch|typedef|union|unsigned|while|class|dot|sqrt|hit|inverse|perpendicular|dominantAxis|trace|hit|luminance|rand|pow|min|max|illuminance|ambient
-/*Is inside Keyword ?? But is used as identifier in dieletric_material.rtsl*/
 
 TYPE int|float|bool|vec2|vec3|vec4|ivec2|ivec3|ivec4|bvec2|bvec3|bvec4|rt_Primitive|rt_Camera|rt_Material|rt_Texture|rt_Light|void
-QUALIFIER attribute|uniform|varying|const|public|private|scratch|void|color
+QUALIFIER attribute|uniform|varying|const|public|private|scratch|void
+/*color should be a qualifier but is used as a function call in test1.rtsl ??? why ???*/
 
 STATE RayOrigin|RayDirection|InverseRayDirectionEpsilon|HitDistance|ScreenCoord|LensCoord|du|dv|TimeSeedvec3|InverseRayDirection|Epsilon|BoundMin|BoundMax|GeometricNormal|ShadingNormal|TextureUV|TextureUVW|dsdu|dsdv|PDF|TimeSeed|TextureColor|FloatTextureValue|dtdu|dtdv|dPdu|dPdv|HitPoint|LightDirection|LightDistance|LightColor|EmissionColor|BSDFSeed|PDF|SampleColor|BSDFValue
 
@@ -23,11 +22,26 @@ STATE RayOrigin|RayDirection|InverseRayDirectionEpsilon|HitDistance|ScreenCoord|
 
 ":" { return COLON; }
 ";"	{ return SEMICOLON; }
+"=" { return EQUAL; }
+"("	{ return LPARENTHESIS; }
+")"	{ return RPARENTHESIS; }
+"{"	{ return LBRACE; }
+"}"	{ return RBRACE; }
+"<" { return LT; }
+"," { return LT; }
+
+return { return RETURN_KEY; }
+if { return IF; }
+else { return ELSE; }
 {KEYWORD} {  return KEYWORD; }
-{TYPE} { yylval = yytext; return TYPE; }
+rt_{STATE} { return STATE; }     
+{TYPE} { yylval.s = ((char*)&yytext[3]); return TYPE; }
 {QUALIFIER} { return QUALIFIER; }  
 {ID} { return IDENTIFIER; }
 "."{ID} { return SWIZZLE;}
+
+{DIGIT}+	{ yylval.i = atoi(yytext); return INT; }
+{DIGIT}+"."{DIGIT}*	{ yylval.f = atof(yytext); return FLOAT; }
      
 \n	++num_lines;
 [ \t]+	/* eat up whitespace */

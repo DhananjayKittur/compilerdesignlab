@@ -10,7 +10,7 @@ then
     	exit
 	elif [ "$1" = "clean" ];
 	then
-		rm *.c *.out *.h *.err
+		rm *.c *.out *.h *.err *.output
 		echo "Directory cleaned"
 		exit
 	elif [ "$1" = "generate" ];
@@ -32,4 +32,4 @@ fi
 
 bison -vd student.y -o student.yy.c 
 flex -o student.lex.c student.lex 
-gcc -o parser.out student.yy.c student.lex.c
+gcc -o parser.out student.yy.c student.lex.c -lfl
