@@ -14,27 +14,32 @@
 
 /*Declare Tokens*/
 %token KEYWORD IDENTIFIER COLON TYPE SWIZZLE SEMICOLON QUALIFIER EQUAL INT FLOAT LPARENTHESIS RPARENTHESIS
-%token LBRACE RBRACE RETURN_KEY LT IF ELSE COMMA STATE
+%token LBRACE RBRACE RETURN_KEY LT IF ELSE COMMA STATE SHADER_DEF
 %token EOL
 
 %%
 program: parse
 	| program parse
 	;
-parse: decl
-	| stmt
+parse:  stmt
 	| shader_def
 	| function_def
+	| decl
+	| decl_qualifier
 	;
-shader_def: class_def TYPE SEMICOLON { printf("SHADER_DEF\n");}
+shader_def: class_def SHADER_DEF SEMICOLON { printf("SHADER_DEF %s\n", yylval.s);}
 class_def: KEYWORD id COLON
+decl_qualifier: QUALIFIER deftype SEMICOLON { printf("DECLARATION\n");}
+	;
 decl: deftype SEMICOLON { printf("DECLARATION\n");}
 	;
 stmt: expr SEMICOLON { printf("STATEMENT\n");}
 	| func_stmt SEMICOLON { printf("STATEMENT\n");}
 	| return_statement SEMICOLON { printf("STATEMENT\n"); }
+	| if_statement { printf("STATEMENT\n");}
 	;
 expr: assign val
+	| assign id
 	;
 assign: 
 	STATE EQUAL
@@ -69,7 +74,6 @@ block: LBRACE code_block RBRACE
 code_block: 
 	| code_block stmt
 	| code_block decl
-	| code_block if_statement
 	;
 val: INT
 	| FLOAT
@@ -85,6 +89,7 @@ if_statement:
 	;
 bool_ops:
 	LPARENTHESIS id LT INT RPARENTHESIS
+	| LPARENTHESIS id RPARENTHESIS
 	;
 %%
 
