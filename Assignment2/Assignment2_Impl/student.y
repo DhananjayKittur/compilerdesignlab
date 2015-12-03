@@ -14,7 +14,7 @@
 
 /*Declare Tokens*/
 %token KEYWORD IDENTIFIER COLON TYPE SWIZZLE SEMICOLON QUALIFIER EQUAL INT FLOAT LPARENTHESIS RPARENTHESIS
-%token LBRACE RBRACE RETURN_KEY LT IF ELSE COMMA STATE SHADER_DEF
+%token LBRACE RBRACE RETURN_KEY LT GT IF ELSE COMMA STATE SHADER_DEF WHILE FOR INC DEC MUL DIV ADD SUB
 %token EOL
 
 %%
@@ -30,6 +30,7 @@ parse:  stmt
 shader_def: class_def SHADER_DEF SEMICOLON { printf("SHADER_DEF %s\n", yylval.s);}
 class_def: KEYWORD id COLON
 decl_qualifier: QUALIFIER deftype SEMICOLON { printf("DECLARATION\n");}
+	| deftype EQUAL val SEMICOLON { printf("DECLARATION\n"); }
 	;
 decl: deftype SEMICOLON { printf("DECLARATION\n");}
 	;
@@ -37,9 +38,16 @@ stmt: expr SEMICOLON { printf("STATEMENT\n");}
 	| func_stmt SEMICOLON { printf("STATEMENT\n");}
 	| return_statement SEMICOLON { printf("STATEMENT\n"); }
 	| if_statement { printf("STATEMENT\n");}
+	| block { printf("STATEMENT\n"); }
+	| while_loop { printf("STATEMENT\n");}
+	| for_loop { printf("STATEMENT\n");}
 	;
 expr: assign val
 	| assign id
+	| assign param_type MUL param_type
+	| assign param_type DIV param_type
+	| assign param_type ADD param_type
+	| assign param_type SUB param_type 
 	;
 assign: 
 	STATE EQUAL
@@ -74,11 +82,12 @@ block: LBRACE code_block RBRACE
 code_block: 
 	| code_block stmt
 	| code_block decl
+	| code_block decl_qualifier
 	;
 val: INT
 	| FLOAT
 	;
-id : IDENTIFIER {}
+id : IDENTIFIER
 	;
 return_statement: RETURN_KEY val
 	| RETURN_KEY id
@@ -87,9 +96,26 @@ if_statement:
 	IF bool_ops stmt
 	| IF bool_ops stmt ELSE stmt { printf("IF - ELSE\n"); }
 	;
+while_loop: WHILE bool_ops stmt
+	;
+for_loop: FOR for_condition stmt
+	;
+for_condition:
+	LPARENTHESIS expr SEMICOLON bool_val SEMICOLON arith_expr RPARENTHESIS
+	;
 bool_ops:
-	LPARENTHESIS id LT INT RPARENTHESIS
-	| LPARENTHESIS id RPARENTHESIS
+	LPARENTHESIS bool_val RPARENTHESIS
+	;
+bool_val:
+	id LT INT
+	| id GT INT
+	| id
+	;
+arith_expr:
+	INC id
+	| id INC
+	| DEC id
+	| id DEC
 	;
 %%
 

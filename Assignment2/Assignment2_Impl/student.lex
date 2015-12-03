@@ -28,7 +28,13 @@ STATE RayOrigin|RayDirection|InverseRayDirectionEpsilon|HitDistance|ScreenCoord|
 "{"	{ return LBRACE; }
 "}"	{ return RBRACE; }
 "<" { return LT; }
+">" { return GT; }
 "," { return COMMA; }
+"+=" { return EQUAL; }
+"+"	{ return MUL; }
+"-"	{ return DIV; }
+"*"	{ return MUL; }
+"/"	{ return DIV; }
 
 return { return RETURN_KEY; }
 rt_Primitive { yylval.s = "primitive"; return SHADER_DEF;}
@@ -38,15 +44,19 @@ rt_Texture { yylval.s = "texture"; return SHADER_DEF;}
 rt_Light { yylval.s = "light"; return SHADER_DEF;}
 if { return IF; }
 else { return ELSE; }
+while { return WHILE; }
+for { return FOR; }
 {KEYWORD} {  return KEYWORD; }
 rt_{STATE} { return STATE; }     
 {TYPE} { yylval.s = ((char*)&yytext[3]); return TYPE; }
 {QUALIFIER} { return QUALIFIER; }  
 {ID} { return IDENTIFIER; }
 "."{ID} { return SWIZZLE;}
+"++"	{ return INC; }
+"--"	{ return DEC; }
 
 {DIGIT}+	{ yylval.i = atoi(yytext); return INT; }
-{DIGIT}*"."{DIGIT}+	{ yylval.f = atof(yytext); return FLOAT; }
+{DIGIT}*"."{DIGIT}+|{DIGIT}+"."{DIGIT}*	{ yylval.f = atof(yytext); return FLOAT; }
      
 \n	++num_lines;
 [ \t]+	/* eat up whitespace */

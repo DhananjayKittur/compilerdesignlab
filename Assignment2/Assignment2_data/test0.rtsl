@@ -6,9 +6,8 @@
 class Test0 : rt_Material;
 
 
-    if(k) 
-      return .5;
-    else
-      return 1.0;
+void shade() {
 
+	float x = 5.0;
+}
 

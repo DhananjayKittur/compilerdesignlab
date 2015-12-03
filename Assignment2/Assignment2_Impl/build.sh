@@ -6,7 +6,8 @@ then
     	echo "Available Commands --> 
     			1. ./build.sh (To build file) 
     			2. ./build.sh clean (To clean the build)
-    			3. ./build.sh generate file_name(To generate output and compare with the test data)"
+    			3. ./build.sh generate file_name(To generate output and compare with the test data)
+    			4. ./build.sh diff testx ( where x = 0,1,...,8)"
     	exit
 	elif [ "$1" = "clean" ];
 	then
@@ -23,6 +24,17 @@ then
 		TEST_FILE=$2
 		echo "Comparing with the test data"
 		./parser.out <../Assignment2_data/$TEST_FILE.rtsl 1>$TEST_FILE.out 2>$TEST_FILE.err
+		exit
+	elif [ "$1" = "diff" ];
+	then
+		if [ $# -ne 2 ];
+		then
+			echo "Invalid command!!! Use--> ./build.sh diff file_name"
+			exit
+		fi
+		TEST_FILE=$2
+		echo "Computing difference of $TEST_FILE.out"
+		diff -b $TEST_FILE.out ../Assignment2_data/$TEST_FILE.out
 		exit
 	else
 		echo "Wrong Options selected. Available options 1. help 2. clean 3. compare"
