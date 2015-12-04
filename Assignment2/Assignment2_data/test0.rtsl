@@ -5,9 +5,3 @@
 
 class Test0 : rt_Material;
 
-
-  // Section 1
-  color refl_result = trace(P, R);
-
-  // Section 2
-  color refr_result = trace(P, T);

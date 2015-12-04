@@ -52,9 +52,9 @@ then
 		fi
 		echo "Git Push"
 		rm *.c *.out *.h *.err *.output
-		git add status
+		git status
 		git add --all
-		git commit -m 
+		git commit -m MESSAGE
 		exit
 	else
 		echo "Wrong Options selected. Available options 1. help 2. clean 3. compare"

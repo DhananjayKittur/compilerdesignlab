@@ -18,6 +18,8 @@ QUALIFIER attribute|uniform|varying|const|public|private|scratch|void
 
 STATE RayOrigin|RayDirection|InverseRayDirectionEpsilon|HitDistance|ScreenCoord|LensCoord|du|dv|TimeSeedvec3|InverseRayDirection|Epsilon|BoundMin|BoundMax|GeometricNormal|ShadingNormal|TextureUV|TextureUVW|dsdu|dsdv|PDF|TimeSeed|TextureColor|FloatTextureValue|dtdu|dtdv|dPdu|dPdv|HitPoint|LightDirection|LightDistance|LightColor|EmissionColor|BSDFSeed|PDF|SampleColor|BSDFValue
 
+METHODS constructor|generateRay|intersect|computeBounds|computeNormal|computeTextureCoordinates|computeDerivatives|generateSample|samplePDF|lookup|shade|BSDF|sampleBSDF|evaluatePDF|emission|illumination
+
 %%  
 
 ":" { return COLON; }
@@ -65,7 +67,8 @@ illuminance { return ILLUMINANCE; }
 ambient { return AMBIENT; }
 
 {KEYWORD} {  return KEYWORD; }
-rt_{STATE} { return STATE; }     
+rt_{STATE} { return STATE; }  
+{METHODS} { yylval.s = yytext; return METHOD; }   
 {TYPE} { yylval.s = ((char*)&yytext[3]); return TYPE; }
 {QUALIFIER} { return QUALIFIER; }  
 {ID} { return IDENTIFIER; }
