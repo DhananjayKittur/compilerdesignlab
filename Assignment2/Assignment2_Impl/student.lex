@@ -67,12 +67,12 @@ illuminance { return ILLUMINANCE; }
 ambient { return AMBIENT; }
 
 {KEYWORD} {  return KEYWORD; }
-rt_{STATE} { return STATE; }  
+rt_{STATE} { yylval.s = yytext; return STATE; }  
 {METHODS} { yylval.s = yytext; return METHOD; }   
 {TYPE} { yylval.s = ((char*)&yytext[3]); return TYPE; }
 {QUALIFIER} { return QUALIFIER; }  
 {ID} { return IDENTIFIER; }
-"."{ID} { return SWIZZLE;}
+{ID}"."{ID}|{STATE}"."{ID} { return SWIZZLE;}
 "++"	{ return INC; }
 "--"	{ return DEC; }
 

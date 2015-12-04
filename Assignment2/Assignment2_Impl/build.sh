@@ -7,7 +7,8 @@ then
     			1. ./build.sh (To build file) 
     			2. ./build.sh clean (To clean the build)
     			3. ./build.sh generate file_name(To generate output and compare with the test data)
-    			4. ./build.sh diff testx ( where x = 0,1,...,8)"
+    			4. ./build.sh diff testx ( where x = 0,1,...,8)
+    			5. ./build.sh git message" 
     	exit
 	elif [ "$1" = "clean" ];
 	then
@@ -54,7 +55,7 @@ then
 		rm *.c *.out *.h *.err *.output
 		git status
 		git add --all
-		git commit -m MESSAGE
+		git commit -m $MESSAGE
 		exit
 	else
 		echo "Wrong Options selected. Available options 1. help 2. clean 3. compare"

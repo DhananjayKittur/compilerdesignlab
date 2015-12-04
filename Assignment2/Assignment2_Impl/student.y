@@ -13,7 +13,6 @@
 	static void verify_method(char* str);
 	static char* find_shader_type(char* method);
 
-
 %}
 
 %union {
@@ -63,6 +62,7 @@ assignment: assign val
 	| assign id
 	| assign equation
 	| assign binary_math_ops id
+	| assign STATE
 	;
 
 binary_math_ops: MUL
@@ -139,6 +139,7 @@ val: INT
 	;
 id : IDENTIFIER
 	| METHOD { verify_method(yylval.s); }
+	| SWIZZLE
 	;
 return_statement: RETURN_KEY val
 	| RETURN_KEY id
