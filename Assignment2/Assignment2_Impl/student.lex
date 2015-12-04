@@ -29,6 +29,8 @@ STATE RayOrigin|RayDirection|InverseRayDirectionEpsilon|HitDistance|ScreenCoord|
 "}"	{ return RBRACE; }
 "<" { return LT; }
 ">" { return GT; }
+">=" { return GE; }
+"<=" { return LE; }
 "," { return COMMA; }
 "+=" { return EQUAL; }
 "+"	{ return MUL; }
@@ -46,6 +48,22 @@ if { return IF; }
 else { return ELSE; }
 while { return WHILE; }
 for { return FOR; }
+color { return COLOR; }
+dot { return DOT; }
+pow { return POW; }
+sqrt { return SQRT; }
+hit { return HIT; }
+inverse { return INVERSE; }
+perpendicular { return PERPENDICULAR; }
+dominantAxis { return DOMINANTAXIS; }
+trace { return TRACE; }
+luminance { return LUMINANCE; }
+rand { return RAND; }
+min { return MIN; }
+max { return MAX; }
+illuminance { return ILLUMINANCE; }
+ambient { return AMBIENT; }
+
 {KEYWORD} {  return KEYWORD; }
 rt_{STATE} { return STATE; }     
 {TYPE} { yylval.s = ((char*)&yytext[3]); return TYPE; }

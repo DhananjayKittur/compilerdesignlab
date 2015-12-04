@@ -36,6 +36,26 @@ then
 		echo "Computing difference of $TEST_FILE.out"
 		diff -b $TEST_FILE.out ../Assignment2_data/$TEST_FILE.out
 		exit
+	elif [ "$1" = "git" ];
+	then
+		if [ $# -ne 2 ];
+		then
+			echo "Invalid command!!! Use--> ./build.sh diff file_name"
+			exit
+		fi
+		TEST_FILE=$2
+		if [ $# = 3 ];
+		then
+			MESSAGE=$3
+		else
+			MESSAGE="GIT PUSH"
+		fi
+		echo "Git Push"
+		rm *.c *.out *.h *.err *.output
+		git add status
+		git add --all
+		git commit -m 
+		exit
 	else
 		echo "Wrong Options selected. Available options 1. help 2. clean 3. compare"
 		exit

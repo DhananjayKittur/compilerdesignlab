@@ -6,8 +6,8 @@
 class Test0 : rt_Material;
 
 
-void shade() {
+  // Section 1
+  color refl_result = trace(P, R);
 
-	float x = 5.0;
-}
-
+  // Section 2
+  color refr_result = trace(P, T);
