@@ -4,3 +4,8 @@
 */ 
 
 class Test0 : rt_Material;
+
+
+    
+  rt_BoundMin = center - vec3(radius);
+  rt_BoundMax = center + vec3(radius);

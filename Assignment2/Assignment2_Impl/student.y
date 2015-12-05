@@ -25,7 +25,7 @@
 %token KEYWORD IDENTIFIER COLON TYPE SWIZZLE SEMICOLON QUALIFIER EQUAL INT FLOAT LPARENTHESIS RPARENTHESIS
 %token LBRACE RBRACE RETURN_KEY LT GT IF ELSE COMMA STATE SHADER_DEF WHILE FOR INC DEC MUL DIV ADD SUB
 %token COLOR POW DOT SQRT HIT INVERSE PERPENDICULAR DOMINANTAXIS TRACE LUMINANCE RAND MIN MAX
-%token ILLUMINANCE AMBIENT GE LE METHOD
+%token ILLUMINANCE AMBIENT GE LE METHOD VEC3
 %token EOL
 
 %%
@@ -43,12 +43,13 @@ class_def: KEYWORD id COLON
 decl_qualifier: QUALIFIER deftype SEMICOLON { printf("DECLARATION\n");}
 	| deftype EQUAL val SEMICOLON { printf("DECLARATION\n"); }
 	| deftype EQUAL STATE SEMICOLON  { printf("DECLARATION\n"); }
+	| deftype EQUAL binary_math_ops equation SEMICOLON{ printf("DECLARATION\n"); }
+	| deftype EQUAL equation SEMICOLON{ printf("DECLARATION\n"); }
 	;
 decl: deftype SEMICOLON { printf("DECLARATION\n");}
 	| deftype EQUAL func_call SEMICOLON { printf("DECLARATION\n"); }
 	| deftype EQUAL id SEMICOLON  { printf("DECLARATION\n"); }
 	| deftype EQUAL type_with_initializers LPARENTHESIS param_list RPARENTHESIS  { printf("DECLARATION\n"); }
-	| deftype EQUAL equation SEMICOLON { printf("DECLARATION\n"); }
 	;
 stmt: assignment SEMICOLON { printf("STATEMENT\n");}
 	| func_stmt SEMICOLON { printf("STATEMENT\n");}
@@ -62,6 +63,7 @@ assignment: assign val
 	| assign id
 	| assign equation
 	| assign binary_math_ops id
+	| assign binary_math_ops equation
 	| assign STATE
 	;
 
@@ -90,6 +92,7 @@ deftype: TYPE id
 	;
 type_with_initializers:
 	COLOR
+	| VEC3
 	;
 func_stmt:
 	assign func_call
@@ -104,19 +107,19 @@ keyword_func:
 	| DOT
 	| SQRT
 	| TRACE
+	| HIT
 	;
 param_list:
 	| param_type
-	| STATE
 	| equation
 	| param_list COMMA param_type
 	| param_list COMMA equation
-	| param_list COMMA STATE
 	;
 param_type:
 	val
 	| id
 	| func_call
+	| STATE
 	;
 function_def: deftype arg_list block { printf("FUNCTION_DEF\n");}
 	;
@@ -159,13 +162,14 @@ bool_ops:
 	LPARENTHESIS bool_val RPARENTHESIS
 	;
 bool_val:
-	id LT INT
-	| id GT INT
-	| id GE FLOAT
-	| id LE FLOAT
+	param_type comparator param_type
 	| id
-	| func_call LT FLOAT
-	| func_call GT FLOAT
+	;
+comparator:
+	LT 
+	| GT
+	| GE
+	| LE
 	;
 unary_ops:
 	INC id

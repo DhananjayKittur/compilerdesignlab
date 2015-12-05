@@ -50,7 +50,6 @@ if { return IF; }
 else { return ELSE; }
 while { return WHILE; }
 for { return FOR; }
-color { return COLOR; }
 dot { return DOT; }
 pow { return POW; }
 sqrt { return SQRT; }
@@ -65,6 +64,10 @@ min { return MIN; }
 max { return MAX; }
 illuminance { return ILLUMINANCE; }
 ambient { return AMBIENT; }
+
+
+color { return COLOR; }
+vec3 { return VEC3; }
 
 {KEYWORD} {  return KEYWORD; }
 rt_{STATE} { yylval.s = yytext; return STATE; }  
