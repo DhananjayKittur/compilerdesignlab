@@ -25,7 +25,6 @@
 	static char* find_shader_type_state(char* state);
 
 %}
-
 %union {
 	int i;
 	char* s;
@@ -38,6 +37,9 @@
 %token COLOR POW DOT SQRT HIT INVERSE PERPENDICULAR DOMINANTAXIS TRACE LUMINANCE RAND MIN MAX
 %token ILLUMINANCE AMBIENT GE LE METHOD VEC3
 %token EOL
+
+%precedence IF
+%precedence ELSE
 
 %%
 program: parse

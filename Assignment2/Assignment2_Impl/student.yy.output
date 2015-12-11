@@ -12,9 +12,6 @@ Terminals unused in grammar
    EOL
 
 
-State 99 conflicts: 1 shift/reduce
-
-
 Grammar
 
     0 $accept: program $end
@@ -1556,7 +1553,6 @@ State 99
 
     ELSE  shift, and go to state 134
 
-    ELSE      [reduce using rule 85 (if_statement)]
     $default  reduce using rule 85 (if_statement)
 
 
