@@ -29,7 +29,7 @@ then
 	else
 		#echo $CHANGES_MADE
 		DIFF_FROM_ORIGIN_STOP=`git diff origin/master`
-		if [ "$DIFF_FROM_ORIGIN_STOP" ];
+		if [ -z "$DIFF_FROM_ORIGIN_STOP" ];
 		then
 			echo "Origin has changed. Will merge before commiting."
 			git merge origin/master

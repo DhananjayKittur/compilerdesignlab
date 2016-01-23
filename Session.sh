@@ -40,5 +40,7 @@ then
 		git push origin master
 		echo "Session Stopped successfully."
 	fi
+else
+	echo "Run command: $/Session.sh [Start/Stop] to start or stop the session." 
 fi
 
