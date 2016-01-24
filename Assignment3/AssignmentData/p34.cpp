@@ -173,53 +173,44 @@ public:
 
         int currentPos = 0;
         int posOfPred = 0;
-        int smallestPred = 27;
 
 		if(F.getName().compare("main")) {
 			return false;
 		}
 
         for (Function::iterator b = F.begin(), be = F.end(); b != be; ++b) {
+       	    int firstTime = 1;
   			StringRef currName = b->getName();
   			const char *ptrCurrName = currName.data();
   			currentPos = ptrCurrName[0] - 'A';
         	//errs()<<b->getName()<<currentPos<<": ";
 
         	//Initialize the current block
-        	//No need to initialize the first block
+        	//No need to initialize the first block since it will be empty
         	if( currentPos ) {
-        		smallestPred = 27;
-        		//TODO: IMPLEMENT THE MEET OPERATION AND TO FIND THE AND OF ALL THE INCOMING PARENT EDGE
         		for (pred_iterator PI = pred_begin(b), E = pred_end(b); PI != E; ++PI) {
   					BasicBlock *Pred = *PI;
   					StringRef predName = Pred->getName();
   					const char *ptrPredName = predName.data();
+
   					posOfPred = ptrPredName[0] - 'A';
-  					//errs()<<" "<<ptrPredName[0]<<posOfPred;
-  					// If Multiple entry just add the smallest one in the input value because 
-  					// we don't want to expand beyond that
-  					if( smallestPred > posOfPred ) {
-  						smallestPred = posOfPred;
+  					if( currentPos > posOfPred ) {
+						copyEntryValue(currentPos, posOfPred, firstTime);
+						firstTime = 0;
   					}
 				}
-				//errs()<<"Smallest Pred for "<<currentPos<< " is "<<smallestPred<<"\n";
-				copyEntryValue(currentPos, smallestPred);
         	}
 
         	for (BasicBlock::iterator i = b->begin(), ie = b->end(); i != ie; ++i) {
-        		//errs() << *i << "\n";
         		if( isa<LoadInst>(*i)) {
- 				 	//errs() << "Load Instruction " <<I->getOperand(0)->getName()<<"\n";
- 				 	//errs() << "Load Instruction"<<"\n";
  				 	if( !isVariableInitialized( currentPos, i->getOperand(0)->getName())) {
- 				 		//errs()<<"Not Initialized Value "<<i->getOperand(0)->getName()<<"\n";
- 				 		addUninitVar(i->getOperand(0)->getName());
+ 				 		if( i->getOperand(0)->hasName() )
+ 				 			addUninitVar(i->getOperand(0)->getName());
  				 	}
  				 }
  				 if( isa<StoreInst>(*i)) {
- 				 	//errs() << "Store Instruction"<<"\n";
- 				 	addInitializedVar( currentPos, i->getOperand(1)->getName());
- 				 	//errs() << "Store Instruction " << I->getOperand(1)->getName()<<"\n";
+ 				 	if( i->getOperand(1)->hasName() )
+ 				 		addInitializedVar( currentPos, i->getOperand(1)->getName());
  				 }
         		if( isa<CallInst>(i)) {
 
@@ -228,22 +219,17 @@ public:
         			int argPos = 0;
         			for(Function::arg_iterator argIterator = calledFunc->arg_begin(), argE 
         				= calledFunc->arg_end(); argIterator != argE; argIterator++ ) {
-        				//errs()<<" Args: name = "<<argIterator->getName()<<"Type = " <<argIterator->getType()->isPointerTy();
         				if(argIterator->getType()->isPointerTy()) {
         					int retVal = trackPointerArgument(calledFunc, argPos, ArgInstrName[argPos]);
         					if( retVal < 0 ) {
 
  				 				addUninitVar(calledFuncInst->getOperand(argPos)->getName());
-        						//errs()<<"Uninitialized Variable is being used for "<<calledFuncInst->getOperand(argPos)->getName();
         					} else if( retVal > 0 ) {
-        						//errs()<<"Variable initialized for "<<calledFuncInst->getOperand(argPos)->getName();
  				 				addInitializedVar( currentPos, calledFuncInst->getOperand(argPos)->getName());
         					} 
         				}
         				argPos++;
         			}
-        			//errs()<<" Calling Function "<<"\n";
-        			//ParseCalledFunction(calledFuncInst->getCalledFunction());
         		}
         	}
         }
@@ -262,6 +248,13 @@ public:
 	    return false;
 	}
 private:
+	void displayCurrentInitializedValue( int currentPos) {
+
+		for( int i=0; i<mBlockData[currentPos].mNumInitializedVar; i++ ) {
+			errs()<<" "<<mBlockData[currentPos].mInitializedVar[i]<<" ";
+		}
+		errs()<<"\n";
+	}
 	void displayUninitVar() {
 		for( int i=0; i<mNumOfUninitVar; i++ ) {
 			errs()<<mUninitVar[i]<<"\n";
@@ -276,9 +269,29 @@ private:
 		mUninitVar[mNumOfUninitVar++] = val;
 	}
 
-	void copyEntryValue( int current, int smallestPred ) {
-		for( int i=0; i<mBlockData[smallestPred].mNumInitializedVar; i++ ) {
-			mBlockData[current].addInitializedVar(mBlockData[smallestPred].mInitializedVar[i]);
+	void copyEntryValue( int current, int smallestPred, int isFirstTime ) {
+		if( isFirstTime ) {
+			for( int i=0; i<mBlockData[smallestPred].mNumInitializedVar; i++ ) {
+				mBlockData[current].addInitializedVar(mBlockData[smallestPred].mInitializedVar[i]);
+			}
+		} else { //Anding the input with the current input
+			int i,j;
+			for( i=0; i<mBlockData[current].mNumInitializedVar; i++ ) {
+				for ( j=0; j<mBlockData[smallestPred].mNumInitializedVar; j++ ) {
+					if( !mBlockData[current].mInitializedVar[i].compare(mBlockData[smallestPred].mInitializedVar[j])) {
+						break;
+					}
+				}			
+				//Remove temp since it doesnot belong to this value
+				if( j == mBlockData[smallestPred].mNumInitializedVar ) {
+					mBlockData[current].mInitializedVar[i] = 
+						mBlockData[current].mInitializedVar[mBlockData[current].mNumInitializedVar-1];
+					mBlockData[current].mNumInitializedVar--;
+					//This value has to be checked again if it is not the last one in the list
+					if( i < (mBlockData[current].mNumInitializedVar-1))
+						i--;
+				}
+			}
 		}
 	}
 
@@ -305,9 +318,7 @@ private:
 			errs() <<"Function called is null.Returning."<<"\n";
 			return 0;
 		}
-		//errs()<<"Function "<<F->getName()<<"\n";
       	for (Function::iterator b = F->begin(), be = F->end(); b != be; ++b) {
-      			//errs()<<"Block "<<"\n";
         	for (BasicBlock::iterator i = b->begin(), ie = b->end(); i != ie; ++i) {
         		if(index == pos ) {
         			if(!i->hasName()) {
@@ -316,63 +327,36 @@ private:
         		} else if (index > pos && !ptrTrackerSet) {
 
         			if( isa<LoadInst>(*i) ) {
-        				//errs()<<"Inside LoadInst :"<< i->getOperand(0)->getName()<<" name = " <<name<<"\n";
         				if( !i->getOperand(0)->getName().compare(name)) {
         					//The pointer to pointer is being stored in local variable again
-        					//errs()<<"Inside if condition"<<"\n";
         					if( !i->hasName() ) {
         						i->setName(trackerName);
         						ptrTrackerName = i->getName();
         					}
         					ptrTrackerSet = 1;
         				}
-        				//errs()<<*I<<"\n";
-        				//errs()<<"Load: Name: "<<i->getOperand(0)->getName()<<" Type: "<<i->getOperand(0)->getType()->isPointerTy()<<"\n";
-
-        				//LoadInst *loadInst = (LoadInst) &*i;
         			}
         		} else {
         			//Track for the changes in the trackerName
         			if(isa<LoadInst>(*i)) {
-        				//It is being used before declared. So, uninitialized value is being used here
+        				//Value is being used before initializing in the called function. Return Unsuccessful.
         				if(  !i->getOperand(0)->getName().compare(ptrTrackerName)) {
-        					//errs()<<"LoadInst: Uninitialized value is being used";
         					return -1; //prorbably -1;
         				}
         			}
         			if(isa<StoreInst>(*i)) {
-        				//It is being used before declared. So, uninitialized value is being used here
+        				//Value is getting initialized in the called function. Return successful.
         				if(  !i->getOperand(1)->getName().compare(ptrTrackerName)) {
-        					//errs()<<"LoadInst: Value is initialized properly.";
-        					return 1; //prorbably -1;
+        					return 1; 
         				}
         			}
         		}
         		index++;
-        		//errs() << *i << "\n";
         	}
         }
+        //Value is not being used in the called function.
         return 0;
 	}
-#if 0
-private:
-	void addLoadVariable(StringRef val) {
-		/*if( val == NULL ) {
-			return;
-		}*/
-		mLoadVariable[mSize++] = val;
-	}
-	int checkLoadVariable(StringRef val) {
-		for( int i=0; i<mSize; i++ ) {
-			//errs() << "String[i] = " << mLoadVariable[i] <<"\n";
-			if( !mLoadVariable[i].compare(val))  {
-				return 0;
-			}
-		}
-
-		return 1;
-	}
-#endif
 };
 
 class FixingPass : public FunctionPass {
