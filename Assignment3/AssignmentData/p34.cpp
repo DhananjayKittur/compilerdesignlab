@@ -15,6 +15,7 @@
 #include <llvm/Support/raw_ostream.h>
 #include <llvm/Support/InstIterator.h>
 #include <llvm/IR/Constants.h>
+#define WORKING_SOLUTION 0
 
 using namespace llvm;
 
@@ -65,7 +66,36 @@ public:
 	}
 
 	virtual bool runOnFunction(Function &F) {
+#if 1
             // TODO
+		errs()<<"Function "<<F.getName()<<"\n";
+      	for (Function::iterator b = F.begin(), be = F.end(); b != be; ++b) {
+      			//errs()<<"Block "<<"\n";
+        	for (BasicBlock::iterator i = b->begin(), ie = b->end(); i != ie; ++i) {
+        		errs() << *i << "\n";
+        		if( isa<LoadInst>(*i) ) {
+        			//errs()<<*I<<"\n";
+        			//errs()<<"Load: Name: "<<i->getOperand(0)->getName()<<" Type: "<<i->getOperand(0)->getType()->isPointerTy()<<"\n";
+
+        			//LoadInst *loadInst = (LoadInst) &*i;
+        		}
+        		if( isa<StoreInst>(*i) ) {
+        			//errs()<<"Store: Name: "<<i->getOperand(0)->getName()<<" Type: "<<i->getOperand(0)->getType()->isPointerTy()<<"\n";
+        			//errs()<<"Store: Name: "<<i->getOperand(1)->getName()<<" Type: "<<i->getOperand(1)->getType()->isPointerTy()<<"\n";
+        		}
+        		if( isa<CallInst>(i)) {
+        			CallInst *calledFuncInst = (CallInst*) &*i;
+        			Function *calledFunc = calledFuncInst->getCalledFunction();
+        			for(Function::arg_iterator argIterator = calledFunc->arg_begin(), argE 
+        				= calledFunc->arg_end(); argIterator != argE; argIterator++ ) {
+        				//errs()<<" Args: name = "<<argIterator->getName()<<"Type = " <<argIterator->getType()->isPointerTy();
+        			}
+        			//errs()<<" Calling Function "<<"\n";
+        			//ParseCalledFunction(calledFuncInst->getCalledFunction());
+        		}
+        	}
+        }
+#endif
 #if 0
             for (inst_iterator I = inst_begin(F), E = inst_end(F); I != E; ++I) {
  				 //errs() << *I << "\n";
@@ -110,7 +140,7 @@ public:
 			errs()<<"\n";
         }
 #endif
-
+#if WORKING_SOLUTION
 		//Start with Naming the block
         //Given the fact the number of blocks are less than 26
  		char a[2]; 
@@ -167,6 +197,8 @@ public:
  				 }
         	}
         }
+        displayUninitVar();
+#endif
 #if 0
         int j=0;
         for(Function::iterator b = F.begin(), be = F.end(); b != be; ++b) {
@@ -177,7 +209,6 @@ public:
         	j++;
         }
 #endif
-        displayUninitVar();
 	    return false;
 	}
 private:
@@ -214,6 +245,19 @@ private:
 		return 0;
 	}
 
+	void ParseCalledFunction(Function *F) {
+		if( F == NULL ) {
+			errs() <<"Function called is null.returning "<<"\n";
+			return;
+		}
+		errs()<<"Function "<<F->getName()<<"\n";
+      	for (Function::iterator b = F->begin(), be = F->end(); b != be; ++b) {
+      			//errs()<<"Block "<<"\n";
+        	for (BasicBlock::iterator i = b->begin(), ie = b->end(); i != ie; ++i) {
+        		errs() << *i << "\n";
+        	}
+        }
+	}
 #if 0
 private:
 	void addLoadVariable(StringRef val) {

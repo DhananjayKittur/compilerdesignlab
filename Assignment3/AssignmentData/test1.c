@@ -3,12 +3,19 @@
 */
 #include <stdio.h>
 
+
+void fun_a(int *x, int *y){
+    *x = 0;
+}
+
 int main()
 {
-    int k; 
-    float f;  
+    int k;
+    int t; 
+    //float f;  
 
-    printf("%d %f\n", k, f);
+    fun_a(&k, &t);
+    //printf("%d %f\n", k, f);
     
     return 0;
 }
