@@ -30,7 +30,7 @@ then
 			echo "Invalid command!!! Use--> ./build.sh opt testx ( where x = 0,1,...,8) "
 			exit
 		fi
-		opt -load ./p34.so -def-pass $2.bc -o $2_def.bc
+		opt -load ./p34.so -fix-pass $2.bc -o $2_def.bc
 		exit
 	else
 		echo "Wrong Options selected. Available options 1. help 2. clean 3. clang 4.opt"
