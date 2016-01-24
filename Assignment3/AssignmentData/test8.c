@@ -1,6 +1,7 @@
 /*
   Test 8, a more complex control flow.
   Q? : What if a is negative ?? 
+  Q? : Do we have to consider the constant propagation like a value is going to be greater than 10 for sure should we consider that as well ?
   Or do we have to consider the value of control graph before execution. like for( i=0; i<10; i++ ) {}
 */
 

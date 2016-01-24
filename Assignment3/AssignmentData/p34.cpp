@@ -15,7 +15,7 @@
 #include <llvm/Support/raw_ostream.h>
 #include <llvm/Support/InstIterator.h>
 #include <llvm/IR/Constants.h>
-#define WORKING_SOLUTION 0
+#define WORKING_SOLUTION 1
 
 using namespace llvm;
 
@@ -66,9 +66,14 @@ public:
 	}
 
 	virtual bool runOnFunction(Function &F) {
-#if 1
+		StringRef ArgInstrName[10] = {"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"};
+#if 0  //Testing for inter function reference passing 
             // TODO
 		errs()<<"Function "<<F.getName()<<"\n";
+		//For the time being just work for the function call from the main and doesnot support function call from function
+		if(F.getName().compare("main")) {
+			return false;
+		}
       	for (Function::iterator b = F.begin(), be = F.end(); b != be; ++b) {
       			//errs()<<"Block "<<"\n";
         	for (BasicBlock::iterator i = b->begin(), ie = b->end(); i != ie; ++i) {
@@ -84,11 +89,26 @@ public:
         			//errs()<<"Store: Name: "<<i->getOperand(1)->getName()<<" Type: "<<i->getOperand(1)->getType()->isPointerTy()<<"\n";
         		}
         		if( isa<CallInst>(i)) {
+
         			CallInst *calledFuncInst = (CallInst*) &*i;
         			Function *calledFunc = calledFuncInst->getCalledFunction();
+        			int argPos = 0;
+        			errs()<<" Num of Operand = "<<calledFuncInst->getNumArgOperands ()<<"\n";
+        			for( int opIter=0; opIter<calledFuncInst->getNumArgOperands (); opIter++ ) {
+        				errs()<<" Para: "<<calledFuncInst->getOperand(opIter)->getName();
+        			}
         			for(Function::arg_iterator argIterator = calledFunc->arg_begin(), argE 
         				= calledFunc->arg_end(); argIterator != argE; argIterator++ ) {
-        				//errs()<<" Args: name = "<<argIterator->getName()<<"Type = " <<argIterator->getType()->isPointerTy();
+        				errs()<<" Args: name = "<<argIterator->getName()<<"Type = " <<argIterator->getType()->isPointerTy();
+        				if(argIterator->getType()->isPointerTy()) {
+        					int retVal = trackPointerArgument(calledFunc, argPos, ArgInstrName[argPos]);
+        					if( retVal < 0 ) {
+        						errs()<<"Uninitialized Variable is being used for "<<calledFuncInst->getOperand(argPos)->getName();
+        					} else if( retVal > 0 ) {
+        						errs()<<"Variable initialized for "<<calledFuncInst->getOperand(argPos)->getName();
+        					} 
+        				}
+        				argPos++;
         			}
         			//errs()<<" Calling Function "<<"\n";
         			//ParseCalledFunction(calledFuncInst->getCalledFunction());
@@ -154,6 +174,11 @@ public:
         int currentPos = 0;
         int posOfPred = 0;
         int smallestPred = 27;
+
+		if(F.getName().compare("main")) {
+			return false;
+		}
+
         for (Function::iterator b = F.begin(), be = F.end(); b != be; ++b) {
   			StringRef currName = b->getName();
   			const char *ptrCurrName = currName.data();
@@ -164,6 +189,7 @@ public:
         	//No need to initialize the first block
         	if( currentPos ) {
         		smallestPred = 27;
+        		//TODO: IMPLEMENT THE MEET OPERATION AND TO FIND THE AND OF ALL THE INCOMING PARENT EDGE
         		for (pred_iterator PI = pred_begin(b), E = pred_end(b); PI != E; ++PI) {
   					BasicBlock *Pred = *PI;
   					StringRef predName = Pred->getName();
@@ -195,6 +221,30 @@ public:
  				 	addInitializedVar( currentPos, i->getOperand(1)->getName());
  				 	//errs() << "Store Instruction " << I->getOperand(1)->getName()<<"\n";
  				 }
+        		if( isa<CallInst>(i)) {
+
+        			CallInst *calledFuncInst = (CallInst*) &*i;
+        			Function *calledFunc = calledFuncInst->getCalledFunction();
+        			int argPos = 0;
+        			for(Function::arg_iterator argIterator = calledFunc->arg_begin(), argE 
+        				= calledFunc->arg_end(); argIterator != argE; argIterator++ ) {
+        				//errs()<<" Args: name = "<<argIterator->getName()<<"Type = " <<argIterator->getType()->isPointerTy();
+        				if(argIterator->getType()->isPointerTy()) {
+        					int retVal = trackPointerArgument(calledFunc, argPos, ArgInstrName[argPos]);
+        					if( retVal < 0 ) {
+
+ 				 				addUninitVar(calledFuncInst->getOperand(argPos)->getName());
+        						//errs()<<"Uninitialized Variable is being used for "<<calledFuncInst->getOperand(argPos)->getName();
+        					} else if( retVal > 0 ) {
+        						//errs()<<"Variable initialized for "<<calledFuncInst->getOperand(argPos)->getName();
+ 				 				addInitializedVar( currentPos, calledFuncInst->getOperand(argPos)->getName());
+        					} 
+        				}
+        				argPos++;
+        			}
+        			//errs()<<" Calling Function "<<"\n";
+        			//ParseCalledFunction(calledFuncInst->getCalledFunction());
+        		}
         	}
         }
         displayUninitVar();
@@ -245,18 +295,64 @@ private:
 		return 0;
 	}
 
-	void ParseCalledFunction(Function *F) {
+	//Tracks a single argument in a function which is passed by reference
+	int trackPointerArgument(Function *F, int pos, StringRef name) {
+		int index = 0, ptrTrackerSet=0;
+		StringRef strAppend = "track";
+		Twine trackerName = name + strAppend;
+		StringRef ptrTrackerName;
 		if( F == NULL ) {
-			errs() <<"Function called is null.returning "<<"\n";
-			return;
+			errs() <<"Function called is null.Returning."<<"\n";
+			return 0;
 		}
-		errs()<<"Function "<<F->getName()<<"\n";
+		//errs()<<"Function "<<F->getName()<<"\n";
       	for (Function::iterator b = F->begin(), be = F->end(); b != be; ++b) {
       			//errs()<<"Block "<<"\n";
         	for (BasicBlock::iterator i = b->begin(), ie = b->end(); i != ie; ++i) {
-        		errs() << *i << "\n";
+        		if(index == pos ) {
+        			if(!i->hasName()) {
+        				i->setName(name);
+        			}
+        		} else if (index > pos && !ptrTrackerSet) {
+
+        			if( isa<LoadInst>(*i) ) {
+        				//errs()<<"Inside LoadInst :"<< i->getOperand(0)->getName()<<" name = " <<name<<"\n";
+        				if( !i->getOperand(0)->getName().compare(name)) {
+        					//The pointer to pointer is being stored in local variable again
+        					//errs()<<"Inside if condition"<<"\n";
+        					if( !i->hasName() ) {
+        						i->setName(trackerName);
+        						ptrTrackerName = i->getName();
+        					}
+        					ptrTrackerSet = 1;
+        				}
+        				//errs()<<*I<<"\n";
+        				//errs()<<"Load: Name: "<<i->getOperand(0)->getName()<<" Type: "<<i->getOperand(0)->getType()->isPointerTy()<<"\n";
+
+        				//LoadInst *loadInst = (LoadInst) &*i;
+        			}
+        		} else {
+        			//Track for the changes in the trackerName
+        			if(isa<LoadInst>(*i)) {
+        				//It is being used before declared. So, uninitialized value is being used here
+        				if(  !i->getOperand(0)->getName().compare(ptrTrackerName)) {
+        					//errs()<<"LoadInst: Uninitialized value is being used";
+        					return -1; //prorbably -1;
+        				}
+        			}
+        			if(isa<StoreInst>(*i)) {
+        				//It is being used before declared. So, uninitialized value is being used here
+        				if(  !i->getOperand(1)->getName().compare(ptrTrackerName)) {
+        					//errs()<<"LoadInst: Value is initialized properly.";
+        					return 1; //prorbably -1;
+        				}
+        			}
+        		}
+        		index++;
+        		//errs() << *i << "\n";
         	}
         }
+        return 0;
 	}
 #if 0
 private:
