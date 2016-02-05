@@ -1,6 +1,6 @@
 CXXFLAGS = -rdynamic $(shell llvm-config --cxxflags) -g -O0 -std=c++0x
 
-all: p34.so
+all: niroj.so
 
 %.so: %.o
 	$(CXX) $(CXXFLAGS) -dylib -shared -fPIC  $^ -o $@

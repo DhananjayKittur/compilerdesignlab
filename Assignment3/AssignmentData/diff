@@ -1,0 +1,105 @@
+18,20c18
+< #define MAX_INITIALIZED_VALUE 100
+< #define MAX_NUM_OF_BLOCK_IN_A_FUNCTION 26
+< #define MAX_NUM_OF_FUNCTION_ARGS 10
+---
+> #define WORKING_SOLUTION 1
+29c27
+< 	StringRef mInitializedVar[MAX_INITIALIZED_VALUE];
+---
+> 	StringRef mInitializedVar[100];
+56,57c54,55
+< 	BlockData mBlockData[MAX_NUM_OF_BLOCK_IN_A_FUNCTION];
+< 	StringRef mUninitVar[MAX_INITIALIZED_VALUE];
+---
+> 	BlockData mBlockData[26];
+> 	StringRef mUninitVar[100];
+59d56
+< 	StringRef mArgInstrName[MAX_NUM_OF_FUNCTION_ARGS] = {"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"};
+68c65
+< 		//Rename the instruction to track it. So that the data can be easily tracked during the function call.
+---
+> 		StringRef ArgInstrName[10] = {"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"};
+71c68,69
+< 		//Step 1: Giving Name to the block. Consideration: Number of blocks are less than 26
+---
+> 		//Start with Naming the block
+>         //Given the fact the number of blocks are less than 26
+80c78,80
+< 		//Check the function pass for the main. This is where we will track the data from.
+---
+>         int currentPos = 0;
+>         int posOfPred = 0;
+> 
+81a82
+> 			//Just check the function call from the main
+84,85d84
+<         int currentPos = 0;
+<         int posOfPred = 0;
+87d85
+<         //Step 2: Iterate through each block. 
+92,93d89
+<   			//Find which block it is and which position data is stored. Since, the name is give using 
+<   			//ASCII character it can be found out easily using the differences from 'A'
+94a91
+>         	//errs()<<b->getName()<<currentPos<<": ";
+96,97c93,94
+<         	//Step 3: Initialize the current block
+<         	//Entry block need not be initialized.
+---
+>         	//Initialize the current block
+>         	//No need to initialize the first block since it will be empty
+99d95
+<         		//Step 4: Iterate through each predecessor block and Anding the exit list of initialized variable.
+106,108d101
+<   					//Position of predecessor can be checked through it's name to access it's data.
+<   					//The future predecessor need not be Anded for initializing we just need different 
+<   					//variable initialized up to this point from all possible path.
+116,120d108
+< 
+<         	//Step 5: For each instructions in a block, check whether it is a load or store instruction
+<         	//load: Variable is being used. If the variable is not in the list of initialized value, it
+<         	//      is uninitialized
+<         	//store: Value is being stored in the variable. Add the variable to initialized list.
+122,123d109
+< 
+<         		//Check if it is a Load Instruction.
+130,131d115
+< 
+<  				 //Check if it is a Store Instruction.
+136,139d119
+< 
+<  				 //Check if it is a Call Instruction.
+<  				 //For each argument, check if it is a pointer type and if it is then track the argument
+<  				 //in the function to check whether it is initialized or not.
+148c128
+<         					int retVal = trackPointerArgument(calledFunc, argPos, mArgInstrName[argPos]);
+---
+>         					int retVal = trackPointerArgument(calledFunc, argPos, ArgInstrName[argPos]);
+149a130
+> 
+225d205
+< 	//Called functions are expected to be called from main and have no control flow as is the case of test cases.
+277c257,258
+< 
+---
+> //How should the initialization should be done? Should it be done just before the usage or should it be used 
+> //just before the usage.
+283d263
+< 	StringRef mArgInstrName[10] = {"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"};
+286d265
+< 
+289a269
+> 		StringRef ArgInstrName[10] = {"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"};
+351c331
+<         					int retVal = trackPointerArgument(calledFunc, argPos, mArgInstrName[argPos]);
+---
+>         					int retVal = trackPointerArgument(calledFunc, argPos, ArgInstrName[argPos]);
+366,367c346,347
+<         
+<     //Insert the initialization here
+---
+>         //Insert the initialization here
+> 
+402a383
+>   					//errs()<<"Double is missing for "<<I->getName()<<"\n";
