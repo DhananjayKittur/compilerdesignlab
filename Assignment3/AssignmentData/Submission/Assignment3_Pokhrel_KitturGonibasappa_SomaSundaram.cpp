@@ -1,4 +1,6 @@
-/* Name Surname */
+/******************************** Lab Assignment 3, 4*******************************************
+  **Members: Niroj Pokhrel (376630), Logesh Soma Sundaram(376635), , Dhananjaya Kumara Kittur Gonibasappa(376629)**************
+    ****************************/
 /******************************************ALGORITHM USED *********************************************
 Reaching Definition: 
 Entry Condition: Initialize the entry value by taking the intersection of all the predecessor.
